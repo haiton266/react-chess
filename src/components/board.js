@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../index.css';
+import '../index.scss';
 import Square from './square.js';
 
 export default class Board extends React.Component {
@@ -32,6 +32,7 @@ export default class Board extends React.Component {
       </div>
     );
   }
+
 }
 
 

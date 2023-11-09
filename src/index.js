@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import reportWebVitals from './reportWebVitals';
-import './index.css';
-import Game from './components/game.js'
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Game from './components/game';
+import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from './context/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Game/>
+    <UserProvider>
+      <BrowserRouter>
+        <App />
+        {/* <Game /> */}
+      </BrowserRouter>
+    </UserProvider>
   </React.StrictMode>
 );
-// reportWebVitals();
+reportWebVitals();
