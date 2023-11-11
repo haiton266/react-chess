@@ -1,0 +1,48 @@
+.home {
+    background: url('../images/logo192.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.btn-home {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 16px;
+}
+
+.div-home1 {
+    text-align: left;
+    /* Căn lề chữ sang trái */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: flex-end;
+    height: 100%;
+}
+
+.div-home2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.div-aboutus {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.pesu1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0;
+    width: 40%;
+}

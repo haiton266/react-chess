@@ -7,6 +7,8 @@ import initialiseChessBoard from '../helpers/board-initialiser.js';
 import { FetchById, PutUpdate } from '../Services/chessBoardServices.js';
 import Countdown from './Countdown.js';
 import ModalJoinWinner from './ModalJoinWinner';
+import { Container } from 'react-bootstrap';
+import { Delete, updateScore } from '../Services/chessBoardServices.js';
 // import io from 'socket.io-client';
 
 // const socket = io('http://localhost:5000');
@@ -27,6 +29,16 @@ export default function Game() {
   const handleClose = () => {
     setIsShowModalWinner(false);
   }
+  const deleteRoomApi = async (point) => {
+    try {
+      let idRoom = localStorage.getItem("idRoom");
+      await updateScore(localStorage.getItem("username"), point);
+      await Delete(idRoom);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
   const getChess = async () => {
     try {
       let res = await FetchById(localStorage.getItem("idRoom"));
@@ -34,10 +46,15 @@ export default function Game() {
         setPlayer(res.data.turn);
         setListChess(res.data);
         setSquares(initialiseChessBoard(res.data.chessBoard));
-        // console.log("winner: ", res.data.winner);
+
         if (res.data.winner !== "0") {
           setIsShowModalWinner(true);
           setDataWinner(res.data.winner);
+          if (res.data.winner === localStorage.getItem("p")) {
+            await deleteRoomApi(10);
+          }
+          else
+            await deleteRoomApi(-10);
         }
       }
       setIsReset(true);
@@ -71,7 +88,7 @@ export default function Game() {
 
   const updateChess = async (x, player, winner) => {
     try {
-      let res = await PutUpdate(localStorage.getItem("idRoom"), x, player, "no", "no", "no", winner);
+      let res = await PutUpdate(localStorage.getItem("idRoom"), x, player, winner);
     } catch (error) {
       console.error("Error update data: ", error);
     }
@@ -183,35 +200,37 @@ export default function Game() {
   }
 
   return (
-    <div>
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={squares}
-            onClick={(i) => handleClick(i)}
-          />
-        </div>
-        <div className="game-info">
-          <h3>Turn</h3>
-          <div id="player-turn-box" style={{ backgroundColor: turn }}></div>
-          <div className="game-status">{status}</div>
-          <div className="fallen-soldier-block">
-            {<FallenSoldierBlock
-              whiteFallenSoldiers={whiteFallenSoldiers}
-              blackFallenSoldiers={blackFallenSoldiers}
-            />}
+    <Container>
+      <div>
+        <div className="game">
+          <div className="game-board">
+            <Board
+              squares={squares}
+              onClick={(i) => handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <h3>Turn</h3>
+            <div id="player-turn-box" style={{ backgroundColor: turn }}></div>
+            <div className="game-status">{status}</div>
+            <div className="fallen-soldier-block">
+              {<FallenSoldierBlock
+                whiteFallenSoldiers={whiteFallenSoldiers}
+                blackFallenSoldiers={blackFallenSoldiers}
+              />}
+            </div>
           </div>
         </div>
+        <Countdown
+          reset={isReset}
+          setReset={setIsReset}
+        />
+        <ModalJoinWinner
+          show={isShowModalWinner} // cái có thể lấy ra từ prop
+          handleClose={handleClose}
+          dataWinner={dataWinner}
+        />
       </div>
-      <Countdown
-        reset={isReset}
-        setReset={setIsReset}
-      />
-      <ModalJoinWinner
-        show={isShowModalWinner} // cái có thể lấy ra từ prop
-        handleClose={handleClose}
-        dataWinner={dataWinner}
-      />
-    </div>
+    </Container>
   );
 }

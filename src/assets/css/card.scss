@@ -1,0 +1,21 @@
+.small-card {
+    max-width: 200px;
+    margin: 10px;
+    /* Adjust this value to your desired width and margin */
+    /* Add any other styles you want for the smaller card */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Adjust this based on your layout preferences */
+}
+
+.card-row {
+    width: calc(20% - 15px);
+    box-sizing: border-box;
+    /* 20px for margin between cards, adjust as needed */
+    margin-bottom: 15px;
+    /* Adjust as needed for space between rows */
+}

@@ -1,16 +1,20 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import { PutCreate } from '../Services/chessBoardServices.js';
+import { PostCreate } from '../Services/chessBoardServices.js';
 
-const ModalJoinRoom = (props) => {
+const ModalCreateRoom = (props) => {
     const { show, handleClose } = props;
-    const [IdRoom, setIdRoom] = useState();
     const [codeGame, setCodeGame] = useState();
-    const joinRoomApi = async () => {
+    const createRoomApi = async () => {
         try {
-            let res = await PutCreate(IdRoom, localStorage.getItem("username"), codeGame);
-            localStorage.setItem("p", 2);
-            localStorage.setItem("idRoom", IdRoom);
+            let username = localStorage.getItem("username");
+            let res = await PostCreate("R2N2B2Q2K2B2N2R2P2P2P2P2P2P2P2P20000000000000000000000000000000000000000000000000000000000000000P1P1P1P1P1P1P1P1R1N1B1Q1K1B1N1R1", 1, codeGame, username, "no", "0");
+
+            if (res && res.data) {
+                console.log(res.data.message)
+                localStorage.setItem("p", 1);
+                localStorage.setItem("idRoom", res.data.idRoom);
+            }
             handleClose();
         }
         catch (error) {
@@ -27,15 +31,9 @@ const ModalJoinRoom = (props) => {
                     <div className='body-add-new'>
                         <form>
                             <div className="form-group">
-                                <label for="exampleInputEmail1">Id room</label>
+                                <label>Enter CodeGame</label>
                                 <input
                                     type="text"
-                                    class="form-control"
-                                    onChange={(event) => setIdRoom(event.target.value)}
-                                />
-                                <label>CodeGame</label>
-                                <input
-                                    type="password"
                                     class="form-control"
                                     onChange={(event) => setCodeGame(event.target.value)}
                                 />
@@ -47,15 +45,13 @@ const ModalJoinRoom = (props) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => joinRoomApi()}>
+                    <Button variant="primary" onClick={() => createRoomApi()}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
-
     )
 }
 
-export default ModalJoinRoom;
-
+export default ModalCreateRoom;

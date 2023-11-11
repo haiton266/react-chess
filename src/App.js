@@ -23,9 +23,7 @@ function App() {
         <>
             <div className="app-container">
                 <Header />
-                <Container>
-                    <AppRoutes />
-                </Container>
+                <AppRoutes />
             </div>
         </>
     );

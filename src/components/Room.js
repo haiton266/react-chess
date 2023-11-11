@@ -1,26 +1,27 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { PostCreate } from '../Services/chessBoardServices.js';
 import ModalJoinRoom from './ModalJoinRoom'
+import ModalCreateRoom from './ModalCreateRoom'
+import {
+    MDBCard,
+    MDBCardBody,
+    MDBCardTitle,
+    MDBCardText,
+    MDBCardImage,
+    MDBBtn,
+    MDBRipple
+} from 'mdb-react-ui-kit';
+import CardListComponent from './CardListComponent.js';
+import GridExample from './GridExample.js';
+
 const Room = () => {
     const [isShowModalJoinRoom, setIsShowModalJoinRoom] = React.useState(false);
+    const [isShowModalCreateRoom, setIsShowModalCreateRoom] = React.useState(false);
     const handleClose = () => {
         setIsShowModalJoinRoom(false);
+        setIsShowModalCreateRoom(false);
     }
-    const createRoomApi = async () => {
-        try {
-            let res = await PostCreate("R2N2B2Q2K2B2N2R2P2P2P2P2P2P2P2P20000000000000000000000000000000000000000000000000000000000000000P1P1P1P1P1P1P1P1R1N1B1Q1K1B1N1R1", 1, "no", "no", "no", "0");
 
-            if (res && res.data) {
-                console.log(res.data.message)
-                localStorage.setItem("p", 1);
-                localStorage.setItem("idRoom", res.data.idRoom);
-            }
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
 
     return (
         <>
@@ -29,17 +30,24 @@ const Room = () => {
                     <span><b>Current Room</b></span>
                     <div class='d-flex'>
                         <button class='btn btn-success mx-5'
-                            onClick={() => { createRoomApi() }}
+                            onClick={() => { setIsShowModalCreateRoom(true) }}
                         > Create your room</button>
                         <button class='btn btn-success'
                             onClick={() => { setIsShowModalJoinRoom(true) }}
                         > Join room</button>
                     </div>
                 </div>
+
+                <ModalCreateRoom
+                    show={isShowModalCreateRoom} // cái có thể lấy ra từ prop
+                    handleClose={handleClose}
+                />
                 <ModalJoinRoom
                     show={isShowModalJoinRoom} // cái có thể lấy ra từ prop
                     handleClose={handleClose}
                 />
+
+                <CardListComponent />
             </Container >
         </>
     );
