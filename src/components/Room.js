@@ -29,10 +29,10 @@ const Room = () => {
                 <div class='my-3 d-flex justify-content-between'>
                     <span><b>Current Room</b></span>
                     <div class='d-flex'>
-                        <button class='btn btn-success mx-5'
+                        <button class='btn btn-warning mx-5'
                             onClick={() => { setIsShowModalCreateRoom(true) }}
                         > Create your room</button>
-                        <button class='btn btn-success'
+                        <button class='btn btn-warning'
                             onClick={() => { setIsShowModalJoinRoom(true) }}
                         > Join room</button>
                     </div>
@@ -43,7 +43,7 @@ const Room = () => {
                     handleClose={handleClose}
                 />
                 <ModalJoinRoom
-                    show={isShowModalJoinRoom} // cái có thể lấy ra từ prop
+                    show={isShowModalJoinRoom}
                     handleClose={handleClose}
                 />
 

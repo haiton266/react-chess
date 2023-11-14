@@ -1,7 +1,5 @@
 import axiosC from './axios-customize'
 
-
-
 const FetchAll = () => {
     return axiosC.get("/total_data/all");
 }
@@ -21,12 +19,10 @@ const PutUpdate = (id, chessBoard, turn, winner) => {
     return axiosC.put(`/total_data/update/${id}`, { chessBoard, turn, winner });
 }
 
-const updateScore = (username, score) => {
-    return axiosC.put(`/user/${username}`, { score });
-}
+
 
 const Delete = (id) => {
     return axiosC.delete(`/total_data/delete/${id}`);
 }
 
-export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete, updateScore };
+export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete };

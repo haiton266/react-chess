@@ -4,4 +4,12 @@ const loginApi = (username, password) => {
     return axiosC.post("/user/login", { username: username, password: password })
 }
 
-export { loginApi };
+const getAllUser = () => {
+    return axiosC.get("/user/all")
+}
+
+const updateScore = (username, score) => {
+    return axiosC.put(`/user/${username}`, { score });
+}
+
+export { loginApi, getAllUser, updateScore };

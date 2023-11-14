@@ -33,7 +33,7 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <NavLink to="/" className="nav-link">Home</NavLink>
-                            <NavLink to="/rank" className="nav-link">Rank</NavLink>
+                            <NavLink to="/rank" className="nav-link">Ranking</NavLink>
                             {user && user.auth == true ? <>
                                 <NavLink to="/game" className="nav-link">Play game</NavLink>
                                 <NavLink to="/room" className="nav-link">My Room</NavLink>

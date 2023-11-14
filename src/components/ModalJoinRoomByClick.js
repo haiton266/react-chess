@@ -3,16 +3,15 @@ import { useState } from 'react';
 import { PutCreate } from '../Services/chessBoardServices.js';
 import { useNavigate } from 'react-router-dom';
 
-const ModalJoinRoom = (props) => {
+const ModalJoinRoomByClick = (props) => {
     const navigate = useNavigate();
-    const { show, handleClose } = props;
-    const [IdRoom, setIdRoom] = useState();
+    const { show, handleClose, idRoom } = props;
     const [codeGame, setCodeGame] = useState();
     const joinRoomApi = async () => {
         try {
-            let res = await PutCreate(IdRoom, localStorage.getItem("username"), codeGame);
+            let res = await PutCreate(idRoom, localStorage.getItem("username"), codeGame);
             localStorage.setItem("p", 2);
-            localStorage.setItem("idRoom", IdRoom);
+            localStorage.setItem("idRoom", idRoom);
             handleClose();
             navigate('/game');
         }
@@ -24,19 +23,13 @@ const ModalJoinRoom = (props) => {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Join room</Modal.Title>
+                    <Modal.Title>Room {idRoom}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='body-add-new'>
                         <form>
                             <div className="form-group">
-                                <label for="exampleInputEmail1">Id room</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    onChange={(event) => setIdRoom(event.target.value)}
-                                />
-                                <label>CodeGame</label>
+                                <label>Please enter code game to join this room</label>
                                 <input
                                     type="password"
                                     class="form-control"
@@ -51,7 +44,7 @@ const ModalJoinRoom = (props) => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={() => joinRoomApi()}>
-                        Save Changes
+                        Confirm
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -60,5 +53,5 @@ const ModalJoinRoom = (props) => {
     )
 }
 
-export default ModalJoinRoom;
+export default ModalJoinRoomByClick;
 

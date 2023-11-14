@@ -8,7 +8,16 @@ import { FetchById, PutUpdate } from '../Services/chessBoardServices.js';
 import Countdown from './Countdown.js';
 import ModalJoinWinner from './ModalJoinWinner';
 import { Container } from 'react-bootstrap';
-import { Delete, updateScore } from '../Services/chessBoardServices.js';
+import { Delete } from '../Services/chessBoardServices.js';
+import { updateScore } from '../Services/userServices.js';
+import { Row, Col } from 'react-bootstrap';
+import {
+  MDBCard,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardHeader
+} from 'mdb-react-ui-kit';
 // import io from 'socket.io-client';
 
 // const socket = io('http://localhost:5000');
@@ -26,6 +35,8 @@ export default function Game() {
   const [isReset, setIsReset] = useState(true);
   const [isShowModalWinner, setIsShowModalWinner] = React.useState(false);
   const [dataWinner, setDataWinner] = React.useState("");
+  const [player1name, setPlayer1name] = useState("");
+  const [player2name, setPlayer2name] = useState("");
   const handleClose = () => {
     setIsShowModalWinner(false);
   }
@@ -33,7 +44,13 @@ export default function Game() {
     try {
       let idRoom = localStorage.getItem("idRoom");
       await updateScore(localStorage.getItem("username"), point);
-      await Delete(idRoom);
+      setTimeout(async () => {
+        try {
+          await Delete(idRoom);
+        } catch (error) {
+          console.log("Error in delete operation:", error);
+        }
+      }, 1000);
     }
     catch (error) {
       console.log(error)
@@ -46,7 +63,8 @@ export default function Game() {
         setPlayer(res.data.turn);
         setListChess(res.data);
         setSquares(initialiseChessBoard(res.data.chessBoard));
-
+        setPlayer1name(res.data.player1);
+        setPlayer2name(res.data.player2);
         if (res.data.winner !== "0") {
           setIsShowModalWinner(true);
           setDataWinner(res.data.winner);
@@ -71,7 +89,7 @@ export default function Game() {
     try {
       let res = await FetchById(localStorage.getItem("idRoom"));
       if (res && res.data) {
-        if (res.data.chessBoard !== listChess.chessBoard) {
+        if (res.data.chessBoard !== listChess.chessBoard || res.data.player2 !== player2name || res.data.player1 !== player1name) {
           getChess();
         }
       }
@@ -182,7 +200,8 @@ export default function Game() {
       else if (updatedSquares[i].namePeace === "Knight") x += "N" + updatedSquares[i].player;
       else x += updatedSquares[i].namePeace[0] + updatedSquares[i].player;
     }
-    if (competitorKingPosition === false)
+    console.log('competitorKingPosition', typeof competitorKingPosition);
+    if (typeof competitorKingPosition !== 'number')
       updateChess(x, player === 1 ? 2 : 1, String(player));
     else
       updateChess(x, player === 1 ? 2 : 1, "0");
@@ -200,37 +219,52 @@ export default function Game() {
   }
 
   return (
-    <Container>
-      <div>
-        <div className="game">
-          <div className="game-board">
-            <Board
-              squares={squares}
-              onClick={(i) => handleClick(i)}
-            />
-          </div>
-          <div className="game-info">
-            <h3>Turn</h3>
-            <div id="player-turn-box" style={{ backgroundColor: turn }}></div>
-            <div className="game-status">{status}</div>
-            <div className="fallen-soldier-block">
-              {<FallenSoldierBlock
-                whiteFallenSoldiers={whiteFallenSoldiers}
-                blackFallenSoldiers={blackFallenSoldiers}
-              />}
+    <>
+      <div className="bg-white text-black">
+        <Row >
+          <Col sm={8} className='d-flex justify-content-center align-items-center'>
+            <div className='p-5'>
+              <Board
+                squares={squares}
+                onClick={(i) => handleClick(i)}
+              />
             </div>
-          </div>
-        </div>
-        <Countdown
-          reset={isReset}
-          setReset={setIsReset}
-        />
-        <ModalJoinWinner
-          show={isShowModalWinner} // cái có thể lấy ra từ prop
-          handleClose={handleClose}
-          dataWinner={dataWinner}
-        />
+          </Col >
+          <Col className='d-flex justify-content-start align-items-center'>
+            <div className="game-info">
+              <MDBCard shadow='0' border='light' background='white' className='mb-3'>
+                <MDBCardHeader><b>Room {localStorage.getItem('idRoom')}</b></MDBCardHeader>
+                <MDBCardBody >
+                  <div className="d-flex align-items-center">
+                    <MDBCardText>{player1name}: &nbsp;</MDBCardText>
+                    <div id="player-turn-box" style={{ backgroundColor: 'white' }} />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <MDBCardText>{player2name}: &nbsp;</MDBCardText>
+                    <div id="player-turn-box" style={{ backgroundColor: 'black' }} />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <MDBCardText>Current Turn: &nbsp;</MDBCardText>
+                    <div id="player-turn-box" style={{ backgroundColor: turn }} />
+                  </div>
+                  <div className="game-status">{status}</div>
+                  <div className="fallen-soldier-block">
+                    {<FallenSoldierBlock
+                      whiteFallenSoldiers={whiteFallenSoldiers}
+                      blackFallenSoldiers={blackFallenSoldiers}
+                    />}
+                  </div>
+                </MDBCardBody>
+              </MDBCard>
+            </div>
+          </Col>
+        </Row>
       </div>
-    </Container>
+      <ModalJoinWinner
+        show={isShowModalWinner} // cái có thể lấy ra từ prop
+        handleClose={handleClose}
+        dataWinner={dataWinner}
+      />
+    </>
   );
 }

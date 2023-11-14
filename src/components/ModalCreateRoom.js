@@ -1,8 +1,9 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { PostCreate } from '../Services/chessBoardServices.js';
-
+import { useNavigate } from 'react-router-dom';
 const ModalCreateRoom = (props) => {
+    const navigate = useNavigate();
     const { show, handleClose } = props;
     const [codeGame, setCodeGame] = useState();
     const createRoomApi = async () => {
@@ -16,6 +17,7 @@ const ModalCreateRoom = (props) => {
                 localStorage.setItem("idRoom", res.data.idRoom);
             }
             handleClose();
+            navigate('/game');
         }
         catch (error) {
             console.log(error)
