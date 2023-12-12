@@ -16,7 +16,6 @@ import {
 import { UserContext } from '../context/UserContext';
 import { Container } from 'react-bootstrap';
 
-
 const Login = () => {
     const { loginContext, user } = useContext(UserContext);
 
@@ -56,9 +55,25 @@ const Login = () => {
                                     <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg" onChange={(event) => setPassword(event.target.value)} />
 
                                     <p className="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-                                    <MDBBtn outline className='mx-2 px-5' color='white' size='lg' onClick={() => { handleLogin() }}>
+
+                                    <button
+                                        className="login-button"
+                                        onClick={handleLogin}
+                                        style={{
+                                            backgroundColor: '#333333', // Màu nền đen
+                                            color: 'white', // Màu chữ trắng
+                                            fontSize: '18px', // Cỡ chữ
+                                            padding: '10px 20px', // Khoảng cách padding
+                                            border: '2px solid white', // Viền trắng
+                                            borderRadius: '5px', // Bo góc
+                                            cursor: 'pointer', // Con trỏ chuột
+                                            margin: '10px 5px' // Margin xung quanh nút
+                                        }}
+                                    >
                                         Login
-                                    </MDBBtn>
+                                    </button>
+
+
 
                                     <div className='d-flex flex-row mt-3 mb-5'>
                                         <MDBBtn tag='a' color='none' className='m-3' style={{ color: 'white' }}>
@@ -76,7 +91,6 @@ const Login = () => {
 
                                     <div>
                                         <p className="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a></p>
-
                                     </div>
                                 </MDBCardBody>
                             </MDBCard>

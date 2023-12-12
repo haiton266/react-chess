@@ -11,6 +11,7 @@ import { Container } from 'react-bootstrap';
 import { Delete } from '../Services/chessBoardServices.js';
 import { updateScore } from '../Services/userServices.js';
 import { Row, Col } from 'react-bootstrap';
+import { io } from "socket.io-client";
 import {
   MDBCard,
   MDBCardTitle,
@@ -20,10 +21,12 @@ import {
 } from 'mdb-react-ui-kit';
 // import io from 'socket.io-client';
 
-// const socket = io('http://localhost:5000');
+// const socket = io('http://localhost:5001');
 
 
-export default function Game() {
+export default function Game({ socket }) {
+  const [time, setTime] = useState("No data time yet");
+
   const [listChess, setListChess] = useState({});
   const [squares, setSquares] = useState([]);
   const [whiteFallenSoldiers, setWhiteFallenSoldiers] = useState([]);
@@ -37,6 +40,18 @@ export default function Game() {
   const [dataWinner, setDataWinner] = React.useState("");
   const [player1name, setPlayer1name] = useState("");
   const [player2name, setPlayer2name] = useState("");
+  // useEffect(() => {
+  //   socket.on("get_time", (data) => {
+  //     setTime(data.time);
+  //   });
+  //   return () => {
+  //     socket.off("get_time", () => {
+  //       console.log("get_time event was removed");
+  //     });
+  //   };
+  // }, [socket, time]);
+
+
   const handleClose = () => {
     setIsShowModalWinner(false);
   }
@@ -99,14 +114,15 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(getNewChess, 100);
+    const intervalId = setInterval(getNewChess, 500);
     return () => clearInterval(intervalId);
   }, [listChess]);
 
 
   const updateChess = async (x, player, winner) => {
     try {
-      let res = await PutUpdate(localStorage.getItem("idRoom"), x, player, winner);
+      let player2 = localStorage.getItem("player2");
+      let res = await PutUpdate(localStorage.getItem("idRoom"), x, player, winner, player2);
     } catch (error) {
       console.error("Error update data: ", error);
     }
@@ -141,6 +157,7 @@ export default function Game() {
     if (updatedSquares[i] && updatedSquares[i].player === player) {
       setStatus("[1] Wrong selection. Di sai nuoc.");
       setSourceSelection(-1);
+      return;
     } else {
       const updatedWhiteFallenSoldiers = [...whiteFallenSoldiers];
       const updatedBlackFallenSoldiers = [...blackFallenSoldiers];
@@ -191,6 +208,7 @@ export default function Game() {
       } else {
         setStatus("[3] Wrong selection. Choose valid source and destination again.");
         setSourceSelection(-1);
+        return;
       }
     }
 
@@ -200,8 +218,8 @@ export default function Game() {
       else if (updatedSquares[i].namePeace === "Knight") x += "N" + updatedSquares[i].player;
       else x += updatedSquares[i].namePeace[0] + updatedSquares[i].player;
     }
-    console.log('competitorKingPosition', typeof competitorKingPosition);
-    if (typeof competitorKingPosition !== 'number')
+    console.log('competitorKingPosition', competitorKingPosition);
+    if (typeof competitorKingPosition === 'boolean')
       updateChess(x, player === 1 ? 2 : 1, String(player));
     else
       updateChess(x, player === 1 ? 2 : 1, "0");
@@ -245,7 +263,10 @@ export default function Game() {
                   </div>
                   <div className="d-flex align-items-center">
                     <MDBCardText>Current Turn: &nbsp;</MDBCardText>
-                    <div id="player-turn-box" style={{ backgroundColor: turn }} />
+                    <div id="player-turn-box" style={{ backgroundColor: player }} />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <MDBCardText>Time: {time}</MDBCardText>
                   </div>
                   <div className="game-status">{status}</div>
                   <div className="fallen-soldier-block">

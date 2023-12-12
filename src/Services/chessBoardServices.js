@@ -15,8 +15,8 @@ const PutCreate = (id, player2, codeGame) => {
     return axiosC.put(`/total_data/update_join/${id}`, { player2, codeGame });
 }
 
-const PutUpdate = (id, chessBoard, turn, winner) => {
-    return axiosC.put(`/total_data/update/${id}`, { chessBoard, turn, winner });
+const PutUpdate = (id, chessBoard, turn, winner, player2) => {
+    return axiosC.put(`/total_data/update/${id}`, { chessBoard, turn, winner, player2 });
 }
 
 

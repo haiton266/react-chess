@@ -46,3 +46,32 @@
     margin-bottom: 0;
     width: 40%;
 }
+
+
+
+/////////////////
+.chessboard-setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: justify;
+    margin: 10px 0;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    h2,
+    p,
+    ul {
+
+        max-width: 600px; // Điều chỉnh theo nhu cầu
+    }
+}
+
+.small-chess-image {
+    max-width: 50%; // Giảm xuống 50% hoặc kích thước mong muốn
+    height: auto; // Giữ tỉ lệ ảnh
+}

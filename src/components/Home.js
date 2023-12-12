@@ -16,14 +16,25 @@ import {
     MDBRipple
 } from 'mdb-react-ui-kit';
 import chess1 from '../assets/images/chess1.png';
-import chess2 from '../assets/images/chess2.png';
-import chess3 from '../assets/images/chess3.png';
-
+import chess2 from '../assets/images/chess3.png';
+import chess3 from '../assets/images/chess2.png';
 const Home = () => {
     const cardData = [
-        { title: 'Card 1', text: 'Content for Card 1', imgUrl: 'https://mdbootstrap.com/img/new/standard/nature/111.webp' },
-        { title: 'Card 2', text: 'Content for Card 2', imgUrl: 'https://mdbootstrap.com/img/new/standard/nature/102.webp' },
-        { title: 'Card 3', text: 'Content for Card 1', imgUrl: 'https://mdbootstrap.com/img/new/standard/nature/131.webp' }
+        {
+            title: 'Who are we?',
+            text: 'We\'re students at Danang University of Science and Technology.',
+            imgUrl: chess1
+        },
+        {
+            title: 'Technology',
+            text: 'We used ReactJS to create Frontend, Flask (Python) to create Backend, use MySQL to store data. They\'re connected by REST API',
+            imgUrl: chess2
+        },
+        {
+            title: 'Mission',
+            text: 'Giving people a platform to entertain and practice thinking',
+            imgUrl: chess3
+        }
         // Add similar objects for Card 3 to Card 8 with their respective data
     ];
     return (
@@ -64,43 +75,21 @@ const Home = () => {
                 </div>
             </div>
             <Container>
-                <Row md={5} className="d-flex justify-content-center align-items-center">
-                    <Col >
-                        <MDBCard className="small-card d-flex justify-content-center align-items-center">
-                            <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
-                                <MDBCardImage src={chess1} fluid alt="..." width={'90px'} />
-                                <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                            </MDBRipple>
-                            <MDBCardBody>
-                                <MDBCardTitle>Room</MDBCardTitle>
-                                <MDBCardText>Card text</MDBCardText>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </Col>
-                    <Col >
-                        <MDBCard className="small-card d-flex justify-content-center align-items-center" >
-                            <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
-                                <MDBCardImage src={chess2} fluid alt="..." width={'90px'} />
-                                <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                            </MDBRipple>
-                            <MDBCardBody>
-                                <MDBCardTitle>Room</MDBCardTitle>
-                                <MDBCardText>Card text</MDBCardText>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </Col>
-                    <Col >
-                        <MDBCard className="small-card d-flex justify-content-center align-items-center" >
-                            <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
-                                <MDBCardImage src={chess3} fluid alt="..." width={'90px'} />
-                                <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                            </MDBRipple>
-                            <MDBCardBody>
-                                <MDBCardTitle>Room</MDBCardTitle>
-                                <MDBCardText>Card text</MDBCardText>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </Col>
+                <Row md={3} className="d-flex justify-content-center align-items-center">
+                    {cardData.map((card, index) => (
+                        <Col key={index}>
+                            <MDBCard className="small-card d-flex justify-content-center align-items-center">
+                                <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
+                                    <MDBCardImage src={card.imgUrl} fluid alt={card.title} width={'90px'} />
+                                    <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
+                                </MDBRipple>
+                                <MDBCardBody>
+                                    <MDBCardTitle className="text-center">{card.title}</MDBCardTitle>
+                                    <MDBCardText>{card.text}</MDBCardText>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </Col>
+                    ))}
                 </Row>
             </Container >
         </>

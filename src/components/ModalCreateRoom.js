@@ -15,6 +15,7 @@ const ModalCreateRoom = (props) => {
                 console.log(res.data.message)
                 localStorage.setItem("p", 1);
                 localStorage.setItem("idRoom", res.data.idRoom);
+                localStorage.setItem("player2", "people");
             }
             handleClose();
             navigate('/game');

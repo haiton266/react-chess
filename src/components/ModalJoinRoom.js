@@ -13,6 +13,7 @@ const ModalJoinRoom = (props) => {
             let res = await PutCreate(IdRoom, localStorage.getItem("username"), codeGame);
             localStorage.setItem("p", 2);
             localStorage.setItem("idRoom", IdRoom);
+            localStorage.setItem("player2", "people");
             handleClose();
             navigate('/game');
         }

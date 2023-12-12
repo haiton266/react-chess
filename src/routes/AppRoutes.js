@@ -1,16 +1,50 @@
 import Game from '../components/game';
 import { Routes, Route, Link } from "react-router-dom";
 import Home from '../components/Home';
+import Rules from '../components/Rules';
 import Room from '../components/Room';
 import Login from '../components/Login';
 import PrivateRoutes from "./PrivateRoutes";
 import Register from '../components/Register';
 import Rank from '../components/Rank';
+import { io } from "socket.io-client";
+import React, { useState, useEffect } from 'react';
 const AppRoutes = () => {
+    const [socketInstance, setSocketInstance] = useState("");
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        //     const socket = io("http://127.0.0.1:5001/", {
+        //         transports: ["websocket"],
+        //         cors: {
+        //             origin: "http://localhost:3000/",
+        //         },
+        //     });
+
+        //     setSocketInstance(socket);
+
+        //     socket.on("connect", (data) => {
+        //         console.log(data);
+        //     });
+
+        //     socket.on('connect', function () {
+        //         socket.emit('get_time');
+        //     });
+
+        setLoading(false);
+
+        //     socket.on("disconnect", (data) => {
+        //         console.log(data);
+        //     });
+
+        //     return function cleanup() {
+        //         socket.disconnect();
+        //     };
+    }, []);
     return (
         <>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Rules" element={<Rules />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/rank" element={<Rank />} />
@@ -20,7 +54,8 @@ const AppRoutes = () => {
                     path="/game"
                     element={
                         <PrivateRoutes>
-                            <Game />
+                            {/* <Game /> */}
+                            {!loading && <Game socket={socketInstance} />}
                         </PrivateRoutes>}
                 />
                 <Route
