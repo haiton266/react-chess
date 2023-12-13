@@ -15,6 +15,7 @@ function Header() {
         logout();
         console.log(user);
         toast.success('Logout success!');
+        navigate('/login');
     }
     return (
         <>

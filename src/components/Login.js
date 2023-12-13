@@ -51,7 +51,7 @@ const Login = () => {
                                     <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                                     <p className="text-white-50 mb-5">Please enter your login and password!</p>
 
-                                    <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Username address' id='formControlLg' size="lg" onChange={(event) => setUsername(event.target.value)} />
+                                    <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Username' id='formControlLg' size="lg" onChange={(event) => setUsername(event.target.value)} />
                                     <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' id='formControlLg' type='password' size="lg" onChange={(event) => setPassword(event.target.value)} />
 
                                     <p className="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
