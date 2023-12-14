@@ -15,4 +15,5 @@ const updateScore = (username, score) => {
     return axiosC.put(`/user/${username}`, { score });
 }
 
+
 export { loginApi, getAllUser, updateScore, RegisterApi };

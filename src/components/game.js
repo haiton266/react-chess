@@ -104,6 +104,9 @@ export default function Game({ socket }) {
     try {
       let res = await FetchById(localStorage.getItem("idRoom"));
       if (res && res.data) {
+        console.log(res.data.time_player1);
+        setTime(res.data.time_player1);
+
         if (res.data.chessBoard !== listChess.chessBoard || res.data.player2 !== player2name || res.data.player1 !== player1name) {
           getChess();
         }
