@@ -4,8 +4,8 @@ const FetchAll = () => {
     return axiosC.get("/total_data/all");
 }
 
-const FetchById = (id) => {
-    return axiosC.get(`/total_data/${id}`);
+const FetchById = (id, p) => {
+    return axiosC.get(`/total_data/${id}/${p}`);
 }
 
 const PostCreate = (chessBoard, turn, codeGame, player1, player2, winner) => {

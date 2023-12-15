@@ -25,7 +25,8 @@ import {
 
 
 export default function Game({ socket }) {
-  const [time, setTime] = useState("No data time yet");
+  const [time1, setTime1] = useState("No data time yet");
+  const [time2, setTime2] = useState("No data time yet");
 
   const [listChess, setListChess] = useState({});
   const [squares, setSquares] = useState([]);
@@ -73,7 +74,7 @@ export default function Game({ socket }) {
   }
   const getChess = async () => {
     try {
-      let res = await FetchById(localStorage.getItem("idRoom"));
+      let res = await FetchById(localStorage.getItem("idRoom"), player);
       if (res && res.data) {
         setPlayer(res.data.turn);
         setListChess(res.data);
@@ -102,11 +103,12 @@ export default function Game({ socket }) {
 
   const getNewChess = async () => {
     try {
-      let res = await FetchById(localStorage.getItem("idRoom"));
+      let res = await FetchById(localStorage.getItem("idRoom"), player);
       if (res && res.data) {
         console.log(res.data.time_player1);
-        setTime(res.data.time_player1);
-
+        setTime1(res.data.total_time1);
+        setTime2(res.data.total_time2);
+        console.log(res.data);
         if (res.data.chessBoard !== listChess.chessBoard || res.data.player2 !== player2name || res.data.player1 !== player1name) {
           getChess();
         }
@@ -269,7 +271,10 @@ export default function Game({ socket }) {
                     <div id="player-turn-box" style={{ backgroundColor: player }} />
                   </div>
                   <div className="d-flex align-items-center">
-                    <MDBCardText>Time: {time}</MDBCardText>
+                    <MDBCardText>{player1name}    Time: {time1}</MDBCardText>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <MDBCardText>{player2name}    Time: {time2}</MDBCardText>
                   </div>
                   <div className="game-status">{status}</div>
                   <div className="fallen-soldier-block">
