@@ -25,4 +25,8 @@ const Delete = (id) => {
     return axiosC.delete(`/total_data/delete/${id}`);
 }
 
-export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete };
+const getTournamentData = () => {
+    return axiosC.get('/api/rounds');
+}
+
+export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete, getTournamentData };

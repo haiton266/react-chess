@@ -40,6 +40,7 @@ function Header() {
                             {user && user.auth == true ? <>
                                 <NavLink to="/game" className="nav-link">Play game</NavLink>
                                 <NavLink to="/room" className="nav-link">My Room</NavLink>
+                                <NavLink to="/tournament" className="nav-link">Tournament</NavLink>
                             </>
                                 : ''}
                         </Nav>

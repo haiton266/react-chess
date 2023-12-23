@@ -9,6 +9,7 @@ import Register from '../components/Register';
 import Rank from '../components/Rank';
 import { io } from "socket.io-client";
 import React, { useState, useEffect } from 'react';
+import Tournament from '../components/tournament';
 const AppRoutes = () => {
     const [socketInstance, setSocketInstance] = useState("");
     const [loading, setLoading] = useState(true);
@@ -48,6 +49,7 @@ const AppRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/rank" element={<Rank />} />
+                <Route path='/tournament' element={<Tournament />} />
                 {/* <Route path="/game" element={<Room />} />
                 <Route path="/room" element={<Game />} /> */}
                 <Route

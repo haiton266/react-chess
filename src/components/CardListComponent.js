@@ -59,22 +59,33 @@ const RowCards = () => {
     return (
         <>
             <Row md={cardsPerRow} className="g-3">
-                {roomData.map((card, index) => (
-                    <Col key={index}>
-                        <MDBCard className="small-card" >
-                            <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
-                                <MDBCardImage src={imgCard} fluid alt="..." />
-                                <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                            </MDBRipple>
-                            <MDBCardBody>
-                                <MDBCardTitle>Room {card.id}</MDBCardTitle>
-                                <MDBCardText>Card text</MDBCardText>
-                                <MDBBtn href="#" color='light' onClick={() => processLinkClick(card.id)}>Join</MDBBtn>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </Col>
-                ))}
+                {
+                    (() => {
+                        try {
+                            return roomData.map((card, index) => (
+                                <Col key={index}>
+                                    <MDBCard className="small-card" >
+                                        <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay" >
+                                            <MDBCardImage src={imgCard} fluid alt="..." />
+                                            <div className="mask" style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
+                                        </MDBRipple>
+                                        <MDBCardBody>
+                                            <MDBCardTitle>Room {card.id}</MDBCardTitle>
+                                            <MDBCardText>Card text</MDBCardText>
+                                            <MDBBtn href="#" color='light' onClick={() => processLinkClick(card.id)}>Join</MDBBtn>
+                                        </MDBCardBody>
+                                    </MDBCard>
+                                </Col>
+                            ))
+                        } catch (error) {
+                            console.error("Đã xảy ra lỗi khi render roomData:", error);
+                            // Bạn có thể hiển thị thông báo lỗi hoặc một giao diện người dùng thay thế tại đây
+                            return <p>Hiện tại không có phòng nào.</p>;
+                        }
+                    })()
+                }
             </Row>
+
             <ModalJoinRoomByClick
                 show={isShowModalJoinRoom}
                 handleClose={handleClose}
