@@ -6,12 +6,25 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../context/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import {logoutApi} from '../Services/userServices';
 
 function Header() {
-    const { logout, user } = useContext(UserContext);
+    const { setUser,logout, user } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        logoutApi(user.username) // Giả sử 'user' object có username của người dùng
+        .then(response => {
+            // Xử lý khi đăng xuất thành công
+            setUser(null); // Cập nhật context để xóa thông tin người dùng
+            toast.success('Logout success!');
+            navigate('/login');
+        })
+        .catch(error => {
+            // Xử lý lỗi từ server
+            console.error("Logout error", error);
+            toast.error('Logout failed. Please try again!');
+        });
         logout();
         toast.success('Logout success!');
         navigate('/login');

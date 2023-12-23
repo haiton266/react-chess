@@ -1,5 +1,11 @@
 import axiosC from './axios-customize'
 
+
+const logoutApi = (username) => {
+    return axiosC.post(`/user/${username}/logout`);
+}
+
+
 const loginApi = (username, password) => {
     return axiosC.post("/user/login", { username: username, password: password })
 }
@@ -16,4 +22,4 @@ const updateScore = (username, score) => {
 }
 
 
-export { loginApi, getAllUser, updateScore, RegisterApi };
+export { loginApi, getAllUser, updateScore, RegisterApi, logoutApi };
