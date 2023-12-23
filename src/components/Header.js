@@ -6,25 +6,25 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../context/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import {logoutApi} from '../Services/userServices';
-
+import { logoutApi } from '../Services/userServices';
+// import '@fortawesome/react-fontawesome';
 function Header() {
-    const { setUser,logout, user } = useContext(UserContext);
+    const { setUser, logout, user } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
         logoutApi(user.username) // Giả sử 'user' object có username của người dùng
-        .then(response => {
-            // Xử lý khi đăng xuất thành công
-            setUser(null); // Cập nhật context để xóa thông tin người dùng
-            toast.success('Logout success!');
-            navigate('/login');
-        })
-        .catch(error => {
-            // Xử lý lỗi từ server
-            console.error("Logout error", error);
-            toast.error('Logout failed. Please try again!');
-        });
+            .then(response => {
+                // Xử lý khi đăng xuất thành công
+                setUser(null); // Cập nhật context để xóa thông tin người dùng
+                toast.success('Logout success!');
+                navigate('/login');
+            })
+            .catch(error => {
+                // Xử lý lỗi từ server
+                console.error("Logout error", error);
+                toast.error('Logout failed. Please try again!');
+            });
         logout();
         toast.success('Logout success!');
         navigate('/login');
@@ -44,7 +44,7 @@ function Header() {
                     Chess
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav">
-                     <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon icon={faBars} />
                 </Navbar.Toggle>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -55,6 +55,7 @@ function Header() {
                             <>
                                 <NavLink to="/game" className="nav-link">Play Game</NavLink>
                                 <NavLink to="/room" className="nav-link">My Room</NavLink>
+                                <NavLink to="/tournament" className="nav-link">Tournament</NavLink>
                             </>
                         )}
                     </Nav>
