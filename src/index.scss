@@ -1,3 +1,14 @@
+
+
+@media (max-width: 768px) {
+  .btn-home {
+    padding: 10px 20px; // Giảm kích thước cho màn hình nhỏ
+  }
+  .div-home1, .div-home2 {
+    padding: 2rem; // Giảm padding
+  }
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   font-family: Roboto, Helvetica, Arial, sans-serif;

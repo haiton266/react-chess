@@ -1,5 +1,9 @@
 import axiosC from './axios-customize'
 
+
+const PostArticle = (title, content, author) => {
+    return axiosC.post("/articles/add", { title, content, author });
+}
 const FetchAll = () => {
     return axiosC.get("/total_data/all");
 }
@@ -25,4 +29,5 @@ const Delete = (id) => {
     return axiosC.delete(`/total_data/delete/${id}`);
 }
 
-export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete };
+
+export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete, PostArticle};

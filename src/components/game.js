@@ -12,6 +12,8 @@ import { Delete } from '../Services/chessBoardServices.js';
 import { updateScore } from '../Services/userServices.js';
 import { Row, Col } from 'react-bootstrap';
 import { io } from "socket.io-client";
+import '../soundFile/nuocdi1.mp3';
+
 import {
   MDBCard,
   MDBCardTitle,
@@ -51,8 +53,13 @@ export default function Game({ socket }) {
   //     });
   //   };
   // }, [socket, time]);
-
-
+  const [isSoundOn, setIsSoundOn] = useState(true);
+  const playSound = () => {
+    if (isSoundOn) {
+      const audio = new Audio(require('../soundFile/nuocdi1.mp3'));
+      audio.play();
+    }
+  };
   const handleClose = () => {
     setIsShowModalWinner(false);
   }
@@ -158,7 +165,7 @@ export default function Game({ socket }) {
     }
 
     updatedSquares[sourceSelection].style = { ...updatedSquares[sourceSelection].style, backgroundColor: "" };
-
+  
     if (updatedSquares[i] && updatedSquares[i].player === player) {
       setStatus("[1] Wrong selection. Di sai nuoc.");
       setSourceSelection(-1);
@@ -170,9 +177,12 @@ export default function Game({ socket }) {
       const isMovePossible = updatedSquares[sourceSelection].isMovePossible(sourceSelection, i, isDestEnemyOccupied);
 
       if (isMovePossible) {
+        playSound('../soundFile/nuocdi1.mp3');
+
         if (updatedSquares[i] !== null) {
           if (updatedSquares[i].player === 1) {
             updatedWhiteFallenSoldiers.push(updatedSquares[i]);
+            
           } else {
             updatedBlackFallenSoldiers.push(updatedSquares[i]);
           }
@@ -255,6 +265,9 @@ export default function Game({ socket }) {
           </Col >
           <Col className='d-flex justify-content-start align-items-center'>
             <div className="game-info">
+                  <button onClick={() => setIsSoundOn(!isSoundOn)}>
+                      {isSoundOn ? 'Tắt Âm Thanh' : 'Bật Âm Thanh'}
+                  </button>
               <MDBCard shadow='0' border='light' background='white' className='mb-3'>
                 <MDBCardHeader><b>Room {localStorage.getItem('idRoom')}</b></MDBCardHeader>
                 <MDBCardBody >
@@ -267,7 +280,8 @@ export default function Game({ socket }) {
                     <div id="player-turn-box" style={{ backgroundColor: 'black' }} />
                   </div>
                   <div className="d-flex align-items-center">
-                    <MDBCardText>Current Turn: &nbsp;</MDBCardText>
+                 
+                     <MDBCardText>Current Turn: &nbsp;</MDBCardText>
                     <div id="player-turn-box" style={{ backgroundColor: player }} />
                   </div>
                   <div className="d-flex align-items-center">
