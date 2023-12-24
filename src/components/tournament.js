@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 import { Bracket, Seed, SeedItem, SeedTeam } from 'react-brackets';
 import { getTournamentData } from '../Services/chessBoardServices';
 import { useNavigate } from 'react-router-dom';
+import ModalCreateTournament from './ModalCreateTournament.js';
 
 // Hàm gọi API để lấy dữ liệu
 const fetchTournamentData = async () => {
@@ -58,7 +59,10 @@ const renderSeed = ({ seed, breakpoint, firstSeedId, navigate }) => {
 const Tournament = () => {
     const [rounds, setRounds] = useState([]);
     const navigate = useNavigate(); // Di chuyển việc sử dụng hook vào đây
-
+    const [isShowModalCreateTournament, setIsShowModalCreateTournament] = useState(false);
+    const handleClose = () => {
+        setIsShowModalCreateTournament(false);
+    }
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchTournamentData();
@@ -74,9 +78,16 @@ const Tournament = () => {
     const firstSeedId = rounds.length > 0 && rounds[0].seeds.length > 0
         ? rounds[0].seeds[0].id
         : 0;
-
     return (
         <Container>
+            <div class='my-3 d-flex justify-content-between'>
+                <span><b>Current Tournament</b></span>
+                <div class='d-flex'>
+                    <button class='btn btn-warning mx-5'
+                        onClick={() => setIsShowModalCreateTournament(true)}
+                    > Create new tournament</button>
+                </div>
+            </div>
             <div className='p-5'>
                 {rounds.length ? (
                     <Bracket
@@ -89,6 +100,10 @@ const Tournament = () => {
                     <div>Loading...</div>
                 )}
             </div>
+            <ModalCreateTournament
+                show={isShowModalCreateTournament} // cái có thể lấy ra từ prop
+                handleClose={handleClose}
+            />
         </Container>
     );
 };

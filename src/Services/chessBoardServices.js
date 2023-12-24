@@ -31,4 +31,8 @@ const getTournamentData = () => {
     return axiosC.get('/api/rounds');
 }
 
-export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete, getTournamentData };
+const createTournament = (numberPlayer, players) => {
+    return axiosC.post('/tournament/add', { numberPlayer: numberPlayer, namePlayer: players });
+}
+
+export { FetchAll, FetchById, PostCreate, PutUpdate, PutCreate, Delete, getTournamentData, createTournament };
