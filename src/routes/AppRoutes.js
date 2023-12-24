@@ -10,7 +10,10 @@ import Rank from '../components/Rank';
 import { io } from "socket.io-client";
 import React, { useState, useEffect } from 'react';
 import Tournament from '../components/tournament';
+import AdminDashboard from '../components/AdminDashboard';
+import withAdminAuth from '../components/withAdminAuth';
 const AppRoutes = () => {
+    const AdminDashboardWithAuth = withAdminAuth(AdminDashboard);
     const [socketInstance, setSocketInstance] = useState("");
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -50,6 +53,7 @@ const AppRoutes = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/rank" element={<Rank />} />
                 <Route path='/tournament' element={<Tournament />} />
+                <Route path='/admin' element={<AdminDashboardWithAuth />} />
                 {/* <Route path="/game" element={<Room />} />
                 <Route path="/room" element={<Game />} /> */}
                 <Route
@@ -60,6 +64,7 @@ const AppRoutes = () => {
                             {!loading && <Game socket={socketInstance} />}
                         </PrivateRoutes>}
                 />
+
                 <Route
                     path="/room"
                     element={

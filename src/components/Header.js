@@ -56,6 +56,7 @@ function Header() {
                                 <NavLink to="/game" className="nav-link">Play Game</NavLink>
                                 <NavLink to="/room" className="nav-link">My Room</NavLink>
                                 <NavLink to="/tournament" className="nav-link">Tournament</NavLink>
+                                <NavLink to="/admin" className="nav-link">AdminDashboard</NavLink>
                             </>
                         )}
                     </Nav>
