@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { Bracket, Seed, SeedItem, SeedTeam } from 'react-brackets';
 import { getTournamentData } from '../Services/chessBoardServices';
 import { useNavigate } from 'react-router-dom';
 import ModalCreateTournament from './ModalCreateTournament.js';
-
+import { UserContext } from '../context/UserContext';
 // Hàm gọi API để lấy dữ liệu
 const fetchTournamentData = async () => {
     try {
@@ -57,6 +57,7 @@ const renderSeed = ({ seed, breakpoint, firstSeedId, navigate }) => {
 
 // Component chính
 const Tournament = () => {
+    const { setUser, logout, user } = useContext(UserContext);
     const [rounds, setRounds] = useState([]);
     const navigate = useNavigate(); // Di chuyển việc sử dụng hook vào đây
     const [isShowModalCreateTournament, setIsShowModalCreateTournament] = useState(false);
@@ -82,11 +83,13 @@ const Tournament = () => {
         <Container>
             <div class='my-3 d-flex justify-content-between'>
                 <span><b>Current Tournament</b></span>
+                {user && user.isAdmin === true && (
                 <div class='d-flex'>
                     <button class='btn btn-warning mx-5'
                         onClick={() => setIsShowModalCreateTournament(true)}
                     > Create new tournament</button>
                 </div>
+                )}
             </div>
             <div className='p-5'>
                 {rounds.length ? (
